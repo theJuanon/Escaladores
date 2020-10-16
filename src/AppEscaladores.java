@@ -17,9 +17,9 @@ public class AppEscaladores extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(0,3));
-        lienzo=new Lienzo("");
+        lienzo = new Lienzo("");
 
-        lienzos = new Lienzo[]{new Lienzo(""), new Lienzo(""), new Lienzo("")};
+        lienzos = new Lienzo[]{new Lienzo(""), new Lienzo(""), new Lienzo(""), new Lienzo("")};
         for (int i = 0; i<lienzos.length; i++)
             add(lienzos[i]);
         setVisible(true);
