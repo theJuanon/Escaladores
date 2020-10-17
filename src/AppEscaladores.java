@@ -12,6 +12,7 @@ public class AppEscaladores extends JFrame implements ActionListener, KeyListene
     JDialog entrada;
     JTextField txtEscaladores;
     JButton btnSubmit;
+    Timer Tgano;
 
     public AppEscaladores() {
         super("App Escaladores");
@@ -33,17 +34,16 @@ public class AppEscaladores extends JFrame implements ActionListener, KeyListene
         entrada.setVisible(true);
 
         setIconImage(new ImageIcon("icon.png").getImage());
-        setSize(600,600);
-        setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(0,3));
-
+        setLayout(new GridLayout(1,0));
     }
+
     private void HazEscuchas() {
         txtEscaladores.addKeyListener(this);
         txtEscaladores.addActionListener(this);
         btnSubmit.addActionListener(this);
     }
+
     public static void main(String [] a) {
         new AppEscaladores();
 
@@ -59,11 +59,27 @@ public class AppEscaladores extends JFrame implements ActionListener, KeyListene
             int nEsc = Integer.parseInt(txtEscaladores.getText());
             lienzos = new Lienzo[nEsc];
 
+            if (nEsc <= 5)
+                setSize(300*nEsc,720);
+            else
+                setSize(300*5,720);
+            setLocationRelativeTo(null);
+
             for (int i = 0; i<lienzos.length; i++){
-                lienzos[i] = new Lienzo("");
+                lienzos[i] = new Lienzo(i+1);
                 add(lienzos[i]);
             }
             setVisible(true);
+            Tgano = new Timer(300,this);
+            Tgano.start();
+        }
+        if (evt.getSource() == Tgano){
+            for (int i = 0; i<lienzos.length; i++){
+                if (lienzos[i].isGano()){
+                    JOptionPane.showMessageDialog(null,"Ganó escalador "+(i+1), "GANADOR",JOptionPane.INFORMATION_MESSAGE);
+                    Tgano.stop();
+                }
+            }
         }
     }
 
