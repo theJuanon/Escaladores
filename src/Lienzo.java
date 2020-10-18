@@ -8,10 +8,11 @@ public class Lienzo extends Canvas implements ActionListener {
 
     //private String scenario;
     private Timer T;
-    private Image backBuffer = null;
     private String[] spideys = {"spidey1.png","spidey2.png","spidey3.png","spidey4.png","spidey5.png","spidey6.png","spidey7.png"};
     private int ascenso, descenso, intento, sub, nEscalador;
     private boolean gano;
+    Graphics gAux;
+    Image backBuffer;
 
     public Lienzo(int nEscalador) {
         this.setSize(300,720);
@@ -19,18 +20,22 @@ public class Lienzo extends Canvas implements ActionListener {
         intento = 0;
         ascenso = getHeight();
         sub = 0;
-        T = new Timer(300,this);
+        T = new Timer(200,this);
         T.start();
     }
 
-    public void paint(Graphics g){
-        dibuja();
-        g.drawImage(Rutinas.AjustarImagen("fondo2.png",this.getWidth(),this.getHeight()).getImage(),0,0,null);
-        g.drawImage(new ImageIcon(spideys[sub]).getImage(), 100, ascenso - 110,null);
+    public void update(Graphics g){
+        paint(g);
     }
 
-    private void dibuja(){
-
+    public void paint(Graphics g){
+        if (backBuffer == null){
+            backBuffer = createImage(getWidth(), getHeight());
+            gAux = backBuffer.getGraphics();
+        }
+        gAux.drawImage(Rutinas.AjustarImagen("fondo2.png",this.getWidth(),this.getHeight()).getImage(),0,0,null);
+        gAux.drawImage(new ImageIcon(spideys[sub]).getImage(), 100, ascenso - 110,null);
+        g.drawImage(backBuffer, 0,0, getWidth(), getHeight(), this);
     }
 
     @Override

@@ -32,6 +32,7 @@ public class AppEscaladores extends JFrame implements ActionListener, KeyListene
         btnSubmit = new JButton("Start");
         entrada.add(btnSubmit);
         entrada.setVisible(true);
+        Tgano = new Timer(300,this);
 
         setIconImage(new ImageIcon("icon.png").getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,6 +57,7 @@ public class AppEscaladores extends JFrame implements ActionListener, KeyListene
                 JOptionPane.showConfirmDialog(null,"Se requiere numero de escaladores","Numero de Escaladores",JOptionPane.DEFAULT_OPTION);
                 return;
             }
+
             int nEsc = Integer.parseInt(txtEscaladores.getText());
             lienzos = new Lienzo[nEsc];
 
@@ -65,19 +67,21 @@ public class AppEscaladores extends JFrame implements ActionListener, KeyListene
                 setSize(300*5,720);
             setLocationRelativeTo(null);
 
-            for (int i = 0; i<lienzos.length; i++){
+            for (int i = 0; i < lienzos.length; i++){
                 lienzos[i] = new Lienzo(i+1);
                 add(lienzos[i]);
             }
             setVisible(true);
-            Tgano = new Timer(300,this);
             Tgano.start();
+            return;
         }
+
         if (evt.getSource() == Tgano){
-            for (int i = 0; i<lienzos.length; i++){
+            for (int i = 0; i < lienzos.length; i++){
                 if (lienzos[i].isGano()){
                     JOptionPane.showMessageDialog(null,"Ganó escalador "+(i+1), "GANADOR",JOptionPane.INFORMATION_MESSAGE);
                     Tgano.stop();
+                    return;
                 }
             }
         }
@@ -85,6 +89,10 @@ public class AppEscaladores extends JFrame implements ActionListener, KeyListene
 
     @Override
     public void keyTyped(KeyEvent evt) {
+        if (txtEscaladores.getText().length() == 0 && evt.getKeyChar() == '0'){
+            evt.consume();
+            return;
+        }
         if (evt.getKeyChar() < '0' || evt.getKeyChar() > '9')
             evt.consume();
     }
