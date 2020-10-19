@@ -7,7 +7,6 @@ import java.awt.event.KeyListener;
 
 
 public class AppEscaladores extends JFrame implements ActionListener, KeyListener {
-    Lienzo lienzo;
     Lienzo[] lienzos;
     JDialog entrada;
     JTextField txtEscaladores;
@@ -22,7 +21,7 @@ public class AppEscaladores extends JFrame implements ActionListener, KeyListene
 
     private void HazInterfaz() {
         entrada = new JDialog();
-        entrada.setIconImage(new ImageIcon("icon.png").getImage());
+        entrada.setIconImage(new ImageIcon("assets/icon.png").getImage());
         entrada.setSize(200,125);
         entrada.setLocationRelativeTo(null);
         entrada.setLayout(new GridLayout(0,1));
@@ -31,8 +30,9 @@ public class AppEscaladores extends JFrame implements ActionListener, KeyListene
         entrada.add(txtEscaladores);
         btnSubmit = new JButton("Start");
         entrada.add(btnSubmit);
+        entrada.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         entrada.setVisible(true);
-        Tgano = new Timer(300,this);
+        Tgano = new Timer(175,this);
 
         setIconImage(new ImageIcon("icon.png").getImage());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,6 +54,7 @@ public class AppEscaladores extends JFrame implements ActionListener, KeyListene
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource() == btnSubmit){
             if (txtEscaladores.getText().length() == 0){
+                Toolkit.getDefaultToolkit().beep();
                 JOptionPane.showConfirmDialog(null,"Se requiere numero de escaladores","Numero de Escaladores",JOptionPane.DEFAULT_OPTION);
                 return;
             }
